@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getConfig } from '../config.js';
-import { resolveDbPath } from '../db.js';
+import { resolveWorkspaceDatabase } from '../db.js';
 
 /**
  * Resolve the runtime directory used for PID and log files.
@@ -171,6 +171,7 @@ export function startDaemon(options = {}) {
 
   /** @type {SpawnOptions} */
   const opts = {
+    cwd: process.cwd(),
     detached: true,
     env: spawn_env,
     stdio: log_fd >= 0 ? ['ignore', log_fd, log_fd] : 'ignore',
@@ -260,7 +261,7 @@ function sleep(ms) {
  */
 export function printServerUrl() {
   // Resolve from the caller's working directory by default
-  const resolved_db = resolveDbPath();
+  const resolved_db = resolveWorkspaceDatabase();
   console.log(
     `beads db   ${resolved_db.path} (${resolved_db.source}${resolved_db.exists ? '' : ', missing'})`
   );

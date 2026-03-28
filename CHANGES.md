@@ -1,5 +1,63 @@
 # Changes
 
+## 0.11.3
+
+- [`47261a7`](https://github.com/mantoni/beads-ui/commit/47261a7a95d5a17b480ae56c4a10b5eeb49d1007)
+  feat: show close reason in issue detail view (#63) (Tom Preece)
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2026-03-18._
+
+## 0.11.2
+
+- [`929a15d`](https://github.com/mantoni/beads-ui/commit/929a15da79ead6819044e50580093e3cbe87758b)
+  Fix beads setup
+- [`b354aa6`](https://github.com/mantoni/beads-ui/commit/b354aa63a7d04abe50b0da74c5c0e62077f44b69)
+  fix: apply --port/--host overrides before workspace registration (Ryan Peterson)
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2026-03-11._
+
+## 0.11.1
+
+- [`0fc2df7`](https://github.com/mantoni/beads-ui/commit/0fc2df7cbaeb6f0500900ce2bf87e6b3fa8e8ac0)
+  style: fix prettier formatting in list-adapters test (Leon Letto)
+- [`e00ddfc`](https://github.com/mantoni/beads-ui/commit/e00ddfc9b9d421dc31b7d7703f4bfbc9790546f8)
+  fix: add --tree=false to bd list calls for bd 0.59.0 compat (Leon Letto)
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2026-03-07._
+
+## 0.11.0
+
+- [`fc00b87`](https://github.com/mantoni/beads-ui/commit/fc00b87cfd1b6600a9b9088a9f62c2f6e8fc919e)
+  fix(ui): harden daemon restart workspace registration (Leon Letto)
+- [`2ea0dd0`](https://github.com/mantoni/beads-ui/commit/2ea0dd08eb71625fa3ae51e64ea6501b4d058154)
+  perf(ui): reduce list latency by default sandbox bd calls (Leon Letto)
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2026-03-05._
+
+## 0.10.1
+
+- [`62017f7`](https://github.com/mantoni/beads-ui/commit/62017f74fadb439c7270160ac03866d3554f36a3)
+  fix: clipboard copy fallback for non-secure contexts (Rodrigo Blasi)
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2026-03-02._
+
+## 0.10.0
+
+- [`998f256`](https://github.com/mantoni/beads-ui/commit/998f2562b3ad3203c9dd1f627d44b1c2d5ef03a4)
+  Do not wrap issue IDs
+- [`e3c3345`](https://github.com/mantoni/beads-ui/commit/e3c3345db41cd874db8e33ec79c904cc314e6bf8)
+  Improve workspace resolution and fallback db
+- [`6de4652`](https://github.com/mantoni/beads-ui/commit/6de4652c336f77c8d8ec9cc13f5a47e9ba1b3857)
+  Avoid concurrent DB access to work around dolt panic
+- [`011fe9e`](https://github.com/mantoni/beads-ui/commit/011fe9e3dfaa475f744b69ff6b44c3cc23283ad1)
+  Support dolt backend
+- [`63ed3c3`](https://github.com/mantoni/beads-ui/commit/63ed3c3f3f98aa2c6d621537887d98701289dac6)
+  Update beads
+- [`cd0a4c5`](https://github.com/mantoni/beads-ui/commit/cd0a4c59fcfe2c9a655ed2079a2a059a242906c5)
+  docs: highlight multi-workspace feature in README (#47) (Pablo LION)
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2026-02-25._
+
 ## 0.9.3
 
 - [`2e04bc1`](https://github.com/mantoni/beads-ui/commit/2e04bc1eeb5c43e6934d858cd017d80f745a38bb)
