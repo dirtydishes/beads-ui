@@ -1,7 +1,6 @@
 import { typeLabel } from './issue-type.js';
 
 const ID_WIDTH_MIN_CH = 12;
-const ID_WIDTH_MAX_CH = 28;
 const TYPE_WIDTH_MIN_CH = 8;
 const TYPE_WIDTH_MAX_CH = 12;
 
@@ -39,7 +38,7 @@ export function computeIssueTableColumns(issues) {
   }
 
   return {
-    id_width_ch: clampWidth(max_id_length + 2, ID_WIDTH_MIN_CH, ID_WIDTH_MAX_CH),
+    id_width_ch: Math.max(max_id_length + 2, ID_WIDTH_MIN_CH),
     type_width_ch: clampWidth(
       max_type_length + 2,
       TYPE_WIDTH_MIN_CH,

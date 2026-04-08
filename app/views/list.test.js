@@ -788,8 +788,7 @@ describe('views/list', () => {
     const match = first_col_style.match(/width:\s*([0-9]+)ch/);
     const id_width_ch = Number(match ? match[1] : '0');
 
-    expect(id_width_ch).toBeGreaterThan(12);
-    expect(id_width_ch).toBeLessThanOrEqual(28);
+    expect(id_width_ch).toBe(issues[0].id.length + 2);
     expect(table.getAttribute('aria-colcount')).toBe('7');
   });
 });

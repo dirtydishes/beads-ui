@@ -525,8 +525,6 @@ button.id-copy {
   width: 100%;
   line-height: inherit;
   font: inherit;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;
 }

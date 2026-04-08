@@ -631,8 +631,9 @@ describe('views/epics', () => {
     const id_width_ch = Number(id_match ? id_match[1] : '0');
     const type_width_ch = Number(type_match ? type_match[1] : '0');
 
-    expect(id_width_ch).toBeGreaterThan(12);
-    expect(id_width_ch).toBeLessThanOrEqual(28);
+    expect(id_width_ch).toBe(
+      'dream-crates-really-long-issue-identifier-that-keeps-going'.length + 2
+    );
     expect(type_width_ch).toBe(9);
   });
 });

@@ -20,16 +20,16 @@ describe('utils/issue-table-columns', () => {
     expect(widths.type_width_ch).toBe(9);
   });
 
-  test('clamps widths to configured bounds', () => {
+  test('does not cap id width for long IDs', () => {
+    const id = 'dream-crates-really-long-issue-identifier-that-keeps-going';
     const widths = computeIssueTableColumns([
       {
-        id: 'dream-crates-really-long-issue-identifier-that-keeps-going',
+        id,
         issue_type: 'feature'
       }
     ]);
 
-    expect(widths.id_width_ch).toBe(28);
+    expect(widths.id_width_ch).toBe(id.length + 2);
     expect(widths.type_width_ch).toBe(9);
   });
 });
-
