@@ -147,8 +147,8 @@ export function createIssueRowRenderer(options) {
       data-issue-id=${it.id}
       @click=${makeRowClick(it.id)}
     >
-      <td role="gridcell" class="mono">${createIssueIdRenderer(it.id)}</td>
-      <td role="gridcell">${createTypeBadge(it.issue_type)}</td>
+      <td role="gridcell" class="mono id-col">${createIssueIdRenderer(it.id)}</td>
+      <td role="gridcell" class="type-col">${createTypeBadge(it.issue_type)}</td>
       <td role="gridcell">${editableText(it.id, 'title', it.title || '')}</td>
       <td role="gridcell">
         <select

@@ -527,4 +527,112 @@ describe('views/epics', () => {
     );
     expect(input).not.toBeNull();
   });
+
+  test('uses dynamic ID/type widths for epic child tables', async () => {
+    document.body.innerHTML = '<div id="m"></div>';
+    const mount = /** @type {HTMLElement} */ (document.getElementById('m'));
+    const data = {
+      updateIssue: vi.fn(),
+      getIssue: vi.fn(async (id) => ({ id }))
+    };
+    const stores6 = new Map();
+    const listeners6 = new Set();
+    /** @param {string} id */
+    const getStore6 = (id) => {
+      let s = stores6.get(id);
+      if (!s) {
+        s = createSubscriptionIssueStore(id);
+        stores6.set(id, s);
+        s.subscribe(() => {
+          for (const fn of Array.from(listeners6)) {
+            try {
+              fn();
+            } catch {
+              /* ignore */
+            }
+          }
+        });
+      }
+      return s;
+    };
+    const issueStores6 = {
+      getStore: getStore6,
+      /** @param {string} id */
+      snapshotFor(id) {
+        return getStore6(id).snapshot().slice();
+      },
+      /** @param {() => void} fn */
+      subscribe(fn) {
+        listeners6.add(fn);
+        return () => listeners6.delete(fn);
+      }
+    };
+    const subscriptions = createSubscriptionStore(async () => {});
+    issueStores6.getStore('tab:epics').applyPush({
+      type: 'snapshot',
+      id: 'tab:epics',
+      revision: 1,
+      issues: [
+        {
+          id: 'UI-50',
+          title: 'Epic Dynamic Widths',
+          issue_type: 'epic',
+          dependents: [{ id: 'UI-51' }]
+        }
+      ]
+    });
+    const view = createEpicsView(
+      mount,
+      /** @type {any} */ (data),
+      () => {},
+      subscriptions,
+      /** @type {any} */ (issueStores6)
+    );
+    await view.load();
+    issueStores6.getStore('detail:UI-50');
+    issueStores6.getStore('detail:UI-50').applyPush({
+      type: 'snapshot',
+      id: 'detail:UI-50',
+      revision: 1,
+      issues: [
+        {
+          id: 'UI-50',
+          title: 'Epic Dynamic Widths',
+          issue_type: 'epic',
+          dependents: [
+            {
+              id: 'dream-crates-really-long-issue-identifier-that-keeps-going',
+              title: 'Child with long ID',
+              status: 'open',
+              priority: 2,
+              issue_type: 'feature'
+            }
+          ]
+        }
+      ]
+    });
+    await view.load();
+
+    const table = /** @type {HTMLTableElement} */ (
+      mount.querySelector('.epic-children table.table--issue-columns')
+    );
+    const id_col = /** @type {HTMLElement} */ (
+      table.querySelector('colgroup col:nth-child(1)')
+    );
+    const type_col = /** @type {HTMLElement} */ (
+      table.querySelector('colgroup col:nth-child(2)')
+    );
+    const id_match = (id_col.getAttribute('style') || '').match(
+      /width:\s*([0-9]+)ch/
+    );
+    const type_match = (type_col.getAttribute('style') || '').match(
+      /width:\s*([0-9]+)ch/
+    );
+    const id_width_ch = Number(id_match ? id_match[1] : '0');
+    const type_width_ch = Number(type_match ? type_match[1] : '0');
+
+    expect(id_width_ch).toBeGreaterThan(12);
+    expect(id_width_ch).toBeLessThanOrEqual(28);
+    expect(type_width_ch).toBe(9);
+  });
 });

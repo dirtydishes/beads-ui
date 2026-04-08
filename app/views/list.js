@@ -2,6 +2,7 @@ import { html, render } from 'lit-html';
 import { createListSelectors } from '../data/list-selectors.js';
 import { cmpClosedDesc } from '../data/sort.js';
 import { ISSUE_TYPES, typeLabel } from '../utils/issue-type.js';
+import { computeIssueTableColumns } from '../utils/issue-table-columns.js';
 import { issueHashFor } from '../utils/issue-url.js';
 import { debug } from '../utils/logging.js';
 import { statusLabel } from '../utils/status.js';
@@ -229,6 +230,7 @@ export function createListView(
     if (status_filters.length === 1 && status_filters[0] === 'closed') {
       filtered = filtered.slice().sort(cmpClosedDesc);
     }
+    const table_columns = computeIssueTableColumns(filtered);
 
     return html`
       <div class="panel__header">
@@ -289,14 +291,14 @@ export function createListView(
             </div>`
           : html`<div class="issues-block">
               <table
-                class="table"
+                class="table table--issue-columns"
                 role="grid"
                 aria-rowcount=${String(filtered.length)}
-                aria-colcount="6"
+                aria-colcount="7"
               >
                 <colgroup>
-                  <col style="width: 150px" />
-                  <col style="width: 88px" />
+                  <col style="width: ${table_columns.id_width_ch}ch" />
+                  <col style="width: ${table_columns.type_width_ch}ch" />
                   <col />
                   <col style="width: 120px" />
                   <col style="width: 160px" />
@@ -305,8 +307,8 @@ export function createListView(
                 </colgroup>
                 <thead>
                   <tr role="row">
-                    <th role="columnheader">ID</th>
-                    <th role="columnheader">Type</th>
+                    <th role="columnheader" class="id-col">ID</th>
+                    <th role="columnheader" class="type-col">Type</th>
                     <th role="columnheader">Title</th>
                     <th role="columnheader">Status</th>
                     <th role="columnheader">Assignee</th>

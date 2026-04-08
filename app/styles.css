@@ -516,14 +516,19 @@ button {
 }
 /* Inline issue ID renderer: looks like plain text */
 button.id-copy {
+  display: block;
   background: transparent;
   color: inherit;
   border: none;
   padding: 0;
   margin: 0;
+  width: 100%;
   line-height: inherit;
   font: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
 }
 button.id-copy:hover {
   text-decoration: underline;
@@ -1082,6 +1087,13 @@ input.inline-edit:focus {
     border-left: none;
     border-top: 1px solid var(--border);
   }
+  .issues-block,
+  .epic-children {
+    overflow-x: auto;
+  }
+  .table.table--issue-columns {
+    min-width: 760px;
+  }
 }
 
 /* Detail content paddings */
@@ -1197,6 +1209,9 @@ input.inline-edit:focus {
     font-size: 12px;
     color: var(--muted);
     font-weight: 600;
+  }
+  .type-col {
+    white-space: nowrap;
   }
 }
 .epic-row:hover {

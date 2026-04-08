@@ -749,4 +749,47 @@ describe('views/list', () => {
     await Promise.resolve();
     expect(mount.querySelectorAll('tr.issue-row').length).toBe(2);
   });
+
+  test('sizes ID column dynamically for long IDs and keeps bounds', async () => {
+    document.body.innerHTML = '<aside id="mount" class="panel"></aside>';
+    const mount = /** @type {HTMLElement} */ (document.getElementById('mount'));
+    const issues = [
+      {
+        id: 'dream-crates-really-long-issue-identifier-that-keeps-going',
+        title: 'Long ID row',
+        status: 'open',
+        issue_type: 'feature'
+      }
+    ];
+    const issueStores = createTestIssueStores();
+    issueStores.getStore('tab:issues').applyPush({
+      type: 'snapshot',
+      id: 'tab:issues',
+      revision: 1,
+      issues
+    });
+    const view = createListView(
+      mount,
+      async () => [],
+      undefined,
+      undefined,
+      undefined,
+      issueStores
+    );
+    await view.load();
+
+    const table = /** @type {HTMLTableElement} */ (
+      mount.querySelector('table.table--issue-columns')
+    );
+    const first_col = /** @type {HTMLElement} */ (
+      table.querySelector('colgroup col:nth-child(1)')
+    );
+    const first_col_style = first_col.getAttribute('style') || '';
+    const match = first_col_style.match(/width:\s*([0-9]+)ch/);
+    const id_width_ch = Number(match ? match[1] : '0');
+
+    expect(id_width_ch).toBeGreaterThan(12);
+    expect(id_width_ch).toBeLessThanOrEqual(28);
+    expect(table.getAttribute('aria-colcount')).toBe('7');
+  });
 });

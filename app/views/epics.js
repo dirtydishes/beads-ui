@@ -1,6 +1,7 @@
 import { html, render } from 'lit-html';
 import { createListSelectors } from '../data/list-selectors.js';
 import { createIssueIdRenderer } from '../utils/issue-id-renderer.js';
+import { computeIssueTableColumns } from '../utils/issue-table-columns.js';
 import { createIssueRowRenderer } from './issue-row.js';
 
 /**
@@ -83,6 +84,7 @@ export function createEpicsView(
     const is_open = expanded.has(id);
     // Compose children via selectors
     const list = selectors ? selectors.selectEpicChildren(id) : [];
+    const table_columns = computeIssueTableColumns(list);
     const is_loading = loading.has(id);
     return html`
       <div class="epic-group" data-epic-id=${id}>
@@ -116,23 +118,25 @@ export function createEpicsView(
                 ? html`<div class="muted">Loading…</div>`
                 : list.length === 0
                   ? html`<div class="muted">No issues found</div>`
-                  : html`<table class="table">
+                  : html`<table class="table table--issue-columns">
                       <colgroup>
-                        <col style="width: 150px" />
-                        <col style="width: 88px" />
+                        <col style="width: ${table_columns.id_width_ch}ch" />
+                        <col style="width: ${table_columns.type_width_ch}ch" />
                         <col />
                         <col style="width: 120px" />
                         <col style="width: 160px" />
                         <col style="width: 130px" />
+                        <col style="width: 80px" />
                       </colgroup>
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Type</th>
+                          <th class="id-col">ID</th>
+                          <th class="type-col">Type</th>
                           <th>Title</th>
                           <th>Status</th>
                           <th>Assignee</th>
                           <th>Priority</th>
+                          <th>Deps</th>
                         </tr>
                       </thead>
                       <tbody>
